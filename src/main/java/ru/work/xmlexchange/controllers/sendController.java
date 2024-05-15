@@ -26,7 +26,7 @@ public class sendController {
     }
 
     @GetMapping
-    public ResponseEntity<String> send() {
+    public String send() {
 
         //Получаем XML в формате строки
         List<String> listXml = jdbcTemplate.queryForList("SELECT TOP 1 xml FROM tXml", String.class);
@@ -36,8 +36,6 @@ public class sendController {
         HttpHeaders headers = new HttpHeaders();
 
 
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.
-        return
+        return xml;
     }
 }
