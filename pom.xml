@@ -56,11 +56,11 @@
 		</dependency>
 
 
-		<dependency>
+		<!--<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
 			<artifactId>jtds</artifactId>
 			<scope>runtime</scope>
-		</dependency>
+		</dependency>-->
 
 	</dependencies>
 
