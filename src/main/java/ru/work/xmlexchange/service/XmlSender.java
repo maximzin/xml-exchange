@@ -1,6 +1,5 @@
 package ru.work.xmlexchange.service;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
@@ -21,8 +20,12 @@ public class XmlSender {
 
         FileSystemResource fileResource = new FileSystemResource(filePath.toFile());
 
+
+
         webClient.post()
                 .uri(targetUrl)
+                .header("X-Data-Source", "urn")
+                .header("X-Data-Source", "urn")
                 .contentType(MediaType.MULTIPART_FORM_DATA)
                 .body(BodyInserters.fromMultipartData("file", fileResource))
                 .retrieve()

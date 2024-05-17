@@ -1,6 +1,7 @@
 package ru.work.xmlexchange.scheduler;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import ru.work.xmlexchange.service.TestPostQuery;
 import ru.work.xmlexchange.service.XmlGetFromDb;
 import ru.work.xmlexchange.service.XmlSender;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,13 @@ public class ScheduledTasks {
 
     //final XmlSender xmlSender;
     final XmlGetFromDb xmlGetFromDb;
+    final TestPostQuery testPostQuery;
 
 
     @Autowired
-    public ScheduledTasks(XmlGetFromDb xmlGetFromDb) {
+    public ScheduledTasks(XmlGetFromDb xmlGetFromDb, TestPostQuery testPostQuery) {
         this.xmlGetFromDb = xmlGetFromDb;
+        this.testPostQuery = testPostQuery;
         //this.xmlSender = xmlSender;
     }
 
@@ -33,6 +36,8 @@ public class ScheduledTasks {
         for (String xml : xmlList) {
             System.out.println("Sending xml: " + xml);
         }
+
+        System.out.println(testPostQuery.getPost());
 
         //Path filePath = Paths.get("path/to/your/file.txt");
         //String targetUrl = "http://example.com/upload";
