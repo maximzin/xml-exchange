@@ -3,21 +3,27 @@ package ru.work.xmlexchange.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 import ru.work.xmlexchange.config.WebClientConfig;
 
 @Service
 public class TestPostQuery {
 
-    @Autowired
-    private WebClient.Builder webClientBuilder;
+    private final WebClient webClient;
 
-    public String getPost() {
-        WebClient webClient = webClientBuilder.build();
-        return webClient.post().
-                .uri("https://mysite.com/api")
+    public TestPostQuery(WebClientConfig webClientConfig) {
+        this.webClient = webClientConfig.createWebClient();
+    }
+
+    public Mono<String> sendPost(String xmlBody) {
+        return webClient.post()
+                .uri("http://localhost:8081")
                 .header("X-Data-Source", "xdatasource")
                 .header("One-More-Header", "xxxxx")
-                .toString();
+                //.bodyValue(xmlBody)
+                .exchangeToMono(clientResponse -> clientResponse.bodyToMono(String.class));
     }
+
+
 
 }

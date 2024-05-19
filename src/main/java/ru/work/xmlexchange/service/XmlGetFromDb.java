@@ -44,20 +44,15 @@ public class XmlGetFromDb {
                     idXml = jdbcTemplate.queryForObject("SELECT TOP 1 id FROM tXml ORDER BY createDate", String.class);
                     xml = jdbcTemplate.queryForObject("SELECT TOP 1 xml FROM tXml ORDER BY createDate", String.class);
                     xmlList.add(xml);
-                    try {
-                        assert xml != null;
+                    assert xml != null;
 
-                        //Опционально: сохранять ли на жесткий диск XML файлы
-                        saveXmlOnDisk(idXml, xml);
+                    //Опционально: сохранять ли на жесткий диск XML файлы
+                    //saveXmlOnDisk(idXml, xml);
 
-                        //Опционально: переносить в tXml_sended и удалять из основной базы tXml
-                        transferXml(idXml, xml);
-                    }
-                    catch (IOException e) {
-                        throw new IOException(e);
-                    }
+                    //Опционально: переносить в tXml_sended и удалять из основной базы tXml
+                    //transferXml(idXml, xml);
                 }
-            } catch (DataAccessException | IOException e) {
+            } catch (DataAccessException e) {
                 throw new RuntimeException(e);
             }
         }

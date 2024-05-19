@@ -1,6 +1,9 @@
 package ru.work.xmlexchange.scheduler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import reactor.core.publisher.Mono;
 import ru.work.xmlexchange.service.TestPostQuery;
 import ru.work.xmlexchange.service.XmlGetFromDb;
 import ru.work.xmlexchange.service.XmlSender;
@@ -18,6 +21,7 @@ import java.util.List;
 @EnableScheduling
 public class ScheduledTasks {
 
+    private static final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
     //final XmlSender xmlSender;
     final XmlGetFromDb xmlGetFromDb;
     final TestPostQuery testPostQuery;
@@ -37,7 +41,8 @@ public class ScheduledTasks {
             System.out.println("Sending xml: " + xml);
         }
 
-        System.out.println(testPostQuery.getPost());
+        Mono<String> postQuery = testPostQuery.sendPost("0");
+        System.out.println("Post query: " + postQuery.block());
 
         //Path filePath = Paths.get("path/to/your/file.txt");
         //String targetUrl = "http://example.com/upload";
