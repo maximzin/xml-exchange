@@ -17,10 +17,10 @@ public class TestPostQuery {
 
     public Mono<String> sendPost(String xmlBody) {
         return webClient.post()
-                .uri("http://localhost:8081")
+                .uri("http://localhost:8081/send-post")
                 .header("X-Data-Source", "xdatasource")
                 .header("One-More-Header", "xxxxx")
-                //.bodyValue(xmlBody)
+                .bodyValue(xmlBody)
                 .exchangeToMono(clientResponse -> clientResponse.bodyToMono(String.class));
     }
 

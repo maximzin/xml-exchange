@@ -36,5 +36,4 @@ public class TestPostQueryMultipart {
                 .doOnNext(response -> System.out.println("Response: " + response))
                 .doOnError(WebClientResponseException.class, ex -> System.err.println("Error response: " + ex.getResponseBodyAsString()));
     }
-
 }

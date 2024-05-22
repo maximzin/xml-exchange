@@ -47,12 +47,12 @@ public class XmlGetFromDb {
                     assert xml != null;
 
                     //Опционально: сохранять ли на жесткий диск XML файлы
-                    //saveXmlOnDisk(idXml, xml);
+                    saveXmlOnDisk(idXml, xml);
 
                     //Опционально: переносить в tXml_sended и удалять из основной базы tXml
-                    //transferXml(idXml, xml);
+                    transferXml(idXml, xml);
                 }
-            } catch (DataAccessException e) {
+            } catch (DataAccessException | IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -78,7 +78,7 @@ public class XmlGetFromDb {
     }
 
     private void transferXml(String idXml, String xml) {
-        jdbcTemplate.execute("INSERT INTO tXml_sended (id_xml, xml) SELECT TOP 1 id, xml FROM tXml ORDER BY createDate ");
+        //jdbcTemplate.execute("INSERT INTO tXml_sended (id_xml, xml) SELECT TOP 1 id, xml FROM tXml ORDER BY createDate ");
         jdbcTemplate.execute("DELETE FROM tXml WHERE id IN (SELECT TOP 1 id FROM tXml ORDER BY createDate)");
     }
 }

@@ -36,13 +36,18 @@ public class ScheduledTasks {
 
     @Scheduled(fixedRate = 6000) // 60000 ms = 1 minute
     public void scheduleSendingXml() {
+
         List<String> xmlList = xmlGetFromDb.getXml();
-        for (String xml : xmlList) {
-            System.out.println("Sending xml: " + xml);
+        if (!xmlList.isEmpty()) {
+            for (String xml : xmlList) {
+                System.out.println("Sending xml: " + xml);
+                Mono<String> postQuery = testPostQuery.sendPost(xml);
+                System.out.println("Post query: " + postQuery.block());
+            }
         }
 
-        Mono<String> postQuery = testPostQuery.sendPost("0");
-        System.out.println("Post query: " + postQuery.block());
+
+
 
         //Path filePath = Paths.get("path/to/your/file.txt");
         //String targetUrl = "http://example.com/upload";
