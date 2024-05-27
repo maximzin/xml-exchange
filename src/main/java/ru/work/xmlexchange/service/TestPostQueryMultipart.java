@@ -2,6 +2,7 @@ package ru.work.xmlexchange.service;
 
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -10,6 +11,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import reactor.core.publisher.Mono;
 import ru.work.xmlexchange.config.WebClientConfig;
 
+@Service
 public class TestPostQueryMultipart {
     private final WebClient webClient;
 
@@ -28,7 +30,9 @@ public class TestPostQueryMultipart {
         });
 
         return webClient.post()
-                .uri("https://example.com/endpoint")
+                .uri("https://proton.pm.local/upload")
+                .header("X-Data-Source", "xdatasource")
+                .header("One-More-Header", "xxxxx")
                 .contentType(MediaType.MULTIPART_FORM_DATA)
                 .body(BodyInserters.fromMultipartData(body))
                 .retrieve()

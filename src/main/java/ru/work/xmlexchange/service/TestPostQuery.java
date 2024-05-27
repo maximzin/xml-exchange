@@ -17,7 +17,7 @@ public class TestPostQuery {
 
     public Mono<String> sendPost(String xmlBody) {
         return webClient.post()
-                .uri("http://localhost:8081/send-post")
+                .uri("https://proton.pm.local/send-post")
                 .header("X-Data-Source", "xdatasource")
                 .header("One-More-Header", "xxxxx")
                 .bodyValue(xmlBody)

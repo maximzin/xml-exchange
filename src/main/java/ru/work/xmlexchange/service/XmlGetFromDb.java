@@ -78,7 +78,7 @@ public class XmlGetFromDb {
     }
 
     private void transferXml(String idXml, String xml) {
-        //jdbcTemplate.execute("INSERT INTO tXml_sended (id_xml, xml) SELECT TOP 1 id, xml FROM tXml ORDER BY createDate ");
+        jdbcTemplate.execute("INSERT INTO tXml_sended (id_xml, xml) SELECT TOP 1 id, xml FROM tXml ORDER BY createDate ");
         jdbcTemplate.execute("DELETE FROM tXml WHERE id IN (SELECT TOP 1 id FROM tXml ORDER BY createDate)");
     }
 }

@@ -1,5 +1,6 @@
 package ru.work.xmlexchange.controllers;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +22,17 @@ public class TestController {
         this.testPostQuery = testPostQuery;
     }
 
+    @GetMapping("/page")
+    public String testPage() {
+        return "hey";
+    }
+
     @PostMapping("/send-post")
-    public String sendPost(@RequestBody String xmlContent) {
-        System.out.println(xmlContent);
-        return xmlContent;
+    public ResponseEntity<String> sendPost(@RequestBody String xmlContent) {
+        System.out.println("Incoming xml: " + xmlContent);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("header1", "heeey");
+        return new ResponseEntity<>(xmlContent, headers, HttpStatus.OK);
     }
 
     //Если мы принимаем multipart/form-data с файлом
@@ -48,10 +56,11 @@ public class TestController {
     }
 
     //Если мы принимаем multipart/form-data с текстом
-    @PostMapping(value = "/upload3", consumes = "multipart/form-data")
-    public ResponseEntity<String> handleFileUpload3(@RequestParam("file") String file) {
-        System.out.println(file);
+    @PostMapping(value = "/upload2", consumes = "multipart/form-data")
+    public ResponseEntity<String> handleFileUpload2(@RequestParam("text") String text) {
+        System.out.println(text);
         // Возвращаем успешный ответ
-        return ResponseEntity.ok("File received: " + file);
+        //return ResponseEntity.ok("File received: " + text);
+        return ResponseEntity.ok("File received: " + text);
     }
 }

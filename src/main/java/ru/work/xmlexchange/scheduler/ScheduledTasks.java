@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import reactor.core.publisher.Mono;
 import ru.work.xmlexchange.service.TestPostQuery;
+import ru.work.xmlexchange.service.TestPostQueryMultipart;
 import ru.work.xmlexchange.service.XmlGetFromDb;
 import ru.work.xmlexchange.service.XmlSender;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,13 @@ public class ScheduledTasks {
     private static final Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
     //final XmlSender xmlSender;
     final XmlGetFromDb xmlGetFromDb;
-    final TestPostQuery testPostQuery;
+    final TestPostQueryMultipart testPostQueryMultipart;
 
 
     @Autowired
-    public ScheduledTasks(XmlGetFromDb xmlGetFromDb, TestPostQuery testPostQuery) {
+    public ScheduledTasks(XmlGetFromDb xmlGetFromDb, TestPostQueryMultipart testPostQueryMultipart) {
         this.xmlGetFromDb = xmlGetFromDb;
-        this.testPostQuery = testPostQuery;
+        this.testPostQueryMultipart = testPostQueryMultipart;
         //this.xmlSender = xmlSender;
     }
 
@@ -41,8 +42,8 @@ public class ScheduledTasks {
         if (!xmlList.isEmpty()) {
             for (String xml : xmlList) {
                 System.out.println("Sending xml: " + xml);
-                Mono<String> postQuery = testPostQuery.sendPost(xml);
-                System.out.println("Post query: " + postQuery.block());
+                Mono<String> postQuery = testPostQueryMultipart.sendMultipartRequest(xml);
+                System.out.println(postQuery.block());
             }
         }
 
